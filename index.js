@@ -8,8 +8,11 @@ import cors from 'cors';
 dotenv.config();
 const app = express();
 const port = 8000;
+const router = require('./routes');
+// const pokemonRouter = require('./routes/pokemonRouter');
 
 app.use(cors());
+app.use('/', router);
 app.use(express.json());
 // app.use('/pokemon', pokemonRouter);
 

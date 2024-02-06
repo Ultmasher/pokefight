@@ -19,7 +19,7 @@ export const getPokemon_id = (req, res) => {
     });
 }
 
-export const getPokemonInfoById = (req, res) => {
+export const infoPokemon = (req, res) => {
     const id = parseInt(req.params.id);
     const info = req.params.info;
     pool.query('SELECT $1 FROM pokemons WHERE id = $2', [info, id], (error, results) => {
