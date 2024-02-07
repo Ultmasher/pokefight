@@ -3,7 +3,7 @@ import { getPokemons, getPokemon_id, infoPokemon } from '../controllers/pokemonC
 
 const pokemonRouter = express.Router();
 
-pokemonRouter.get('/:info', infoPokemon);
+pokemonRouter.get('/pokemon/:id/:info', infoPokemon);
 pokemonRouter.get('/:id', getPokemon_id);
 pokemonRouter.get('/', getPokemons);
 
