@@ -1,15 +1,12 @@
-import pool from 'pool';
-import pokeData from "../data/pokeData.json" with { type: "json" };
+import pokeData from "../data/pokeData.json" assert { type: "json" };
 
-export const getPokemons = (req, res) => {
-    const pokemons = pokeData.pokemons;
-    res.status(200).json(pokemons);
+export const getPokemons = async ( req, res) => {
+    res.status(200).json(pokeData);
 }
 
-export const getPokemon_id = (req, res) => {
+export const getPokemon_id = async (req, res) => {
     const id = parseInt(req.params.id);
-    const pokemons = pokeData.pokemons;
-    const pokemon = pokemons.find(pokemon => pokemon.id === id);
+    const pokemon = pokeData.find(pokemon => pokemon.id === id);
     if (pokemon) {
         res.status(200).json(pokemon);
     } else {
@@ -17,35 +14,13 @@ export const getPokemon_id = (req, res) => {
     }
 }
 
-export const infoPokemon = (req, res) => {
-    const id = parseInt(req.params.id);
-    const info = req.params.info;
-    const pokemons = pokeData.pokemons;
-    const pokemon = pokemons.find(pokemon => pokemon.id === id);
+export const infoPokemon = (name, type, baseKey, baseValue) => {
+    return pokeData.filter(pokemon => {
+      return (name ? pokemon.name.english.toLowerCase() === name.toLowerCase() : true) &&
+             (type ? pokemon.type.includes(type) : true) && (baseKey ? baseKey in pokemon.base : true) &&
+             (baseKey && baseValue ? pokemon.base[baseKey] === baseValue : true);
+             
+    });
+  };
 
-    if (pokemon) {
-        let result;
-        switch (info) {
-            case 'name':
-                result = pokemon.name;
-                break;
-            case 'type':
-                result = pokemon.type;
-                break;
-            case 'base':
-                result = pokemon.base;
-                break;
-            default:
-                result = null;
-                break;
-        }
-
-        if (result) {
-            res.status(200).json(result);
-        } else {
-            res.status(404).json({ message: "Invalid information requested" });
-        }
-    } else {
-        res.status(404).json({ message: "Pokemon not found" });
-    }
-}
+export default { getPokemons, getPokemon_id, infoPokemon };
