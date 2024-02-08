@@ -6,8 +6,6 @@ const pokemonRouter = express.Router();
 pokemonRouter.get('/pokemon/:id/:info', infoPokemon);
 pokemonRouter.get('/:id', getPokemon_id);
 pokemonRouter.get('/', getPokemons);
-recipesRouter.get('/', getPokemons);
-recipesRouter.get('/:id', getPokemon_id);
-recipesRouter.get('/:id/:info', infoPokemon);
+
 
 export default pokemonRouter;
